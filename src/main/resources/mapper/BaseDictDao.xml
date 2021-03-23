@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lifedemo01.Dao.BaseDictDao">
+
+    <resultMap id="BaseResultMap" type="com.example.lifedemo01.entity.BaseDict">
+        <!--@Table base_dict-->
+        <result property="dictId" column="DICT_ID" jdbcType="VARCHAR"/>
+        <result property="dictKey" column="DICT_KEY" jdbcType="VARCHAR"/>
+        <result property="dictValue" column="DICT_VALUE" jdbcType="VARCHAR"/>
+        <result property="dictDesc" column="DICT_DESC" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          DICT_ID, DICT_KEY, DICT_VALUE, DICT_DESC
+        from lifedemo.base_dict
+        where DICT_ID = #{dictId} AND DICT_KEY = #{dictKey}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          DICT_ID, DICT_KEY, DICT_VALUE, DICT_DESC
+        from lifedemo.base_dict
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          DICT_ID, DICT_KEY, DICT_VALUE, DICT_DESC
+        from lifedemo.base_dict
+        <where>
+            <if test="dictId != null and dictId != ''">
+                and DICT_ID = #{dictId}
+            </if>
+            <if test="dictKey != null and dictKey != ''">
+                and DICT_KEY = #{dictKey}
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                and DICT_VALUE = #{dictValue}
+            </if>
+            <if test="dictDesc != null and dictDesc != ''">
+                and DICT_DESC = #{dictDesc}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="dictId" useGeneratedKeys="true">
+        insert into lifedemo.base_dict(DICT_ID,DICT_KEY,DICT_VALUE, DICT_DESC)
+        values (#{dictId},#{dictKey},#{dictValue}, #{dictDesc})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update lifedemo.base_dict
+        <set>
+            <if test="dictValue != null and dictValue != ''">
+                DICT_VALUE = #{dictValue},
+            </if>
+            <if test="dictDesc != null and dictDesc != ''">
+                DICT_DESC = #{dictDesc},
+            </if>
+        </set>
+        where DICT_ID = #{dictId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from lifedemo.base_dict where DICT_ID = #{dictId}
+    </delete>
+
+</mapper>

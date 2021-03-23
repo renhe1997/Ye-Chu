@@ -1,0 +1,26 @@
+选择变量表达式
+这里相当于是先使用th:object将user对象取出，然后在里面的th:text中获取user对象中的属性值。
+
+<table>
+    <tr th:object="${user}">
+        <td th:text="*{id}">1</td>
+        <td th:text="*{name}">a</td>
+        <td th:text="*{phone}">137</td>
+    </tr>
+</table>
+
+url表达式
+将后台传入的数据拼接到url中
+
+<a href="info.html" th:href="@{/user/info(id=${user.id})}">参数拼接</a>
+<a href="info.html" th:href="@{/user/info(id=${user.id},phone=${user.phone})}">多参数拼接</a>
+<a href="info.html" th:href="@{/user/info/{uid}(uid=${user.id})}">restful风格</a>
+<a href="info.html" th:href="@{/user/info/{uid}/abc(uid=${user.id})}">restful风格</a>
+
+thymeleaf在js取后端传值
+<script th:inline="javascript">
+   function getData() {
+       var message = [[${dataList}]];
+       console.log(message);
+   }
+</script>

@@ -1,0 +1,47 @@
+源码
+
+从以上源码也可以看出，对String对象的任何改变都不影响到原对象，相关的任何change操作都会生成新的对象
+jvm
+1.创建：
+分两种
+String a = "a";
+创建时，jvm会先判断常量池中是否已经存在"a"，若存在则直接引用，若不存在则实例化该字符串再引用
+最后，栈中存储了字符串常量池中"a"的引用地址
+String b = new String("A");
+先new一个字符串对象放在堆中
+而堆中存储的则是指向常量池中"A"的引用地址
+对于常量池引用地址的获取操作同上
+最后，栈中存储了堆中的字符串对象的引用地址
+所以，常量池中不可能存在两个相同的字符串，这是字符串的不可变性的体现
+2.常量池
+常量池分两种，静态常量池与运行时常量池
+编译期-静态常量池-运行前已经放置好了-常量-如String a = "1";String a1 = "1"+"2";
+运行时-运行时常量池-运行时才会生成-变量-如String b = new String("1");String b1 = "1"+b;
+注意:
+(1):JVM对String str="abc"对象放在常量池中是在编译时做的，而String str3=str1+str2是在运行时刻才能知道的。new对象也是在运行时才做的。
+(2):字面量"+"拼接是在编译期间进行的，拼接后的字符串存放在字符串池中；而字符串引用的"+"拼接运算实在运行时进行的，新创建的字符串存放在堆中。
+
+静态常量池，class文件中的，存储了字符串,类和方法的信息等，占class的大部分内存空间
+运行时常量池，jvm完成类装载操作后会将class的常量池放到方法区中，一般说常量池就是指这个在方法区中的常量池
+如图所示：
+
+3.+与append
+String中的+在编译阶段被解释为，创建StringBuffer对象，调用append()方法，在调用toString()，最后销毁StringBuffer对象这一过程
+如String A= "11"+"22"+Str1+"33"; 这一过程在编译时被解释为String A = new StringBuffer("1122").append(Str).append("33").toString();
+所以当需要在循环中进行+操作时，实际上会消耗大量性能在StringBuffer的创建与销毁上，这里最好手动new一个StringBuffer来代替String
+
+4.String，StringBuffer，StringBuilder区别
+面试常问的问题之一
+(1)可不可变，String用final修饰，静态不可变，其他两个长度可变，这也是为什么有时候用append而不用+，append是在原基础扩容，而+则是新建String
+(2)是否线程安全，String不可变(可理解为常量)，不会出现多个线程同时改变一个资源引起冲突的情况，所以视为安全
+   StringBuffer内部用synchronized加同步锁，线程安全，StringBuffer没有，所以非线程安全
+(3)执行效率，相对来说，StringBuilder > StringBuffer > String，具体情况具体分析
+(4)各自特点，少量数据String灵活多变，大量数据多线程StringBuffer线程安全，大量数据单线程StringBuilder速度更快
+5.String a = new String("kexin");生成了几个对象
+在类加载阶段，生成了一个对象"kexin"放在堆中
+在执行阶段，生成了一个对象a
+所以是两个
+
+
+以上掺杂部分个人理解，欢迎讨论并指正
+

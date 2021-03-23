@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>数据字典查询</title>
+    <link href="/layui/css/layui.css" th:href="@{/layui/css/layui.css}" rel="stylesheet">
+    <script src="/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+</head>
+<body id="wrapper">
+<!--引入公共顶栏-->
+<div th:replace="common::topbar"></div>
+
+
+<div id="content">
+    <table width="100%">
+        <thead>
+        <tr>
+            <th>字典编号</th>
+            <th>字典键</th>
+            <th>字典值</th>
+            <th>备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ObjectMap : ${BaseDict}">
+            <td th:text="${ObjectMap.consumption_id}"></td>
+            <td th:text="${ObjectMap.consumption_reason}"></td>
+            <td th:text="${ObjectMap.consumption_time}"></td>
+            <td th:text="${ObjectMap.consumption_type}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!--引入公共底部栏-->
+<div id="footer" th:replace="common::bottombar"></div>
+</body>
+<script th:inline="javascript">
+    function getData() {
+        var message = [[${dataList}]];
+        console.log(message);
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        getData();
+    });
+    // function getMap() {
+    //     console.log("走");
+    //     $.ajax("/consumption1",// 发送请求的URL字符串。
+    //         {
+    //             dataType : "json", // 预期服务器返回的数据类型。
+    //             type : "post", //  请求方式 POST或GET
+    //             contentType:"application/json;charset=utf-8", //  发送信息至服务器时的内容编码类型
+    //             // 发送到服务器的数据。
+    //             data:JSON.stringify({conIdSearch : 1}),
+    //             async:  true , // 默认设置下，所有请求均为异步请求。如果设置为false，则发送同步请求
+    //             // 请求成功后的回调函数。
+    //             success :function(data){
+    //                 console.log(data);
+    //                 // $("#userName").html(data.userName);
+    //                 // $("#sex").html(data.sex);
+    //                 // $("#age").html(data.age);
+    //             },
+    //             // 请求出错时调用的函数
+    //             error:function(){
+    //                 alert("数据发送失败");
+    //             }
+    //     });
+    // }
+
+</script>
+<style>
+    #wrapper {
+        display: flex;
+        min-height: 100vh; /*1vh表示浏览器高度的1%，100vh为浏览器高度，感觉这个挺好的*/
+        flex-direction: column; /*灵活的项垂直显示*/
+    }
+
+    #content {
+        flex: 1;
+    }
+
+    #footer {
+        height: 100px;
+    }
+</style>
+
+</html>

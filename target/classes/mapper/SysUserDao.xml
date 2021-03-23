@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lifedemo01.System.dao.SysUserDao">
+
+    <resultMap id="BaseResultMap" type="com.example.lifedemo01.System.entity.SysUser">
+        <!--@Table sys_user-->
+        <result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+        <result property="userName" column="USER_NAME" jdbcType="VARCHAR"/>
+        <result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+        <result property="portrait" column="PORTRAIT" jdbcType="VARCHAR"/>
+        <result property="isUse" column="IS_USE" jdbcType="VARCHAR"/>
+        <result property="crtTime" column="CRT_TIME" jdbcType="VARCHAR"/>
+        <result property="lastLoginDate" column="LAST_LOGIN_DATE" jdbcType="VARCHAR"/>
+        <result property="roleId" column="ROLE_ID" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          USER_ID, USER_NAME, PASSWORD, PORTRAIT, IS_USE, CRT_TIME, LAST_LOGIN_DATE, ROLE_ID
+        from lifedemo.sys_user
+        where USER_ID = #{userId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          USER_ID, USER_NAME, PASSWORD, PORTRAIT, IS_USE, CRT_TIME, LAST_LOGIN_DATE, ROLE_ID
+        from lifedemo.sys_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        USER_ID, USER_NAME, PASSWORD, PORTRAIT, IS_USE, CRT_TIME, LAST_LOGIN_DATE, ROLE_ID
+        from lifedemo.sys_user
+        <where>
+            <if test="userId != null">
+                and USER_ID = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and USER_NAME = #{userName}
+            </if>
+            <if test="password != null and password != ''">
+                and PASSWORD = #{password}
+            </if>
+            <if test="portrait != null and portrait != ''">
+                and PORTRAIT = #{portrait}
+            </if>
+            <if test="isUse != null and isUse != ''">
+                and IS_USE = #{isUse}
+            </if>
+            <if test="crtTime != null and crtTime != ''">
+                and CRT_TIME = #{crtTime}
+            </if>
+            <if test="lastLoginDate != null and lastLoginDate != ''">
+                and LAST_LOGIN_DATE = #{lastLoginDate}
+            </if>
+            <if test="roleId != null and roleId != ''">
+                and ROLE_ID = #{roleId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
+        insert into lifedemo.sys_user(USER_NAME, PORTRAIT, IS_USE, CRT_TIME, LAST_LOGIN_DATE, ROLE_ID)
+        values (#{userName}, #{portrait}, #{isUse}, #{crtTime}, #{lastLoginDate}, #{roleId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update lifedemo.sys_user
+        <set>
+            <if test="userName != null and userName != ''">
+                USER_NAME = #{userName},
+            </if>
+            <if test="portrait != null and portrait != ''">
+                PORTRAIT = #{portrait},
+            </if>
+            <if test="isUse != null and isUse != ''">
+                IS_USE = #{isUse},
+            </if>
+            <if test="crtTime != null and crtTime != ''">
+                CRT_TIME = #{crtTime},
+            </if>
+            <if test="lastLoginDate != null and lastLoginDate != ''">
+                LAST_LOGIN_DATE = #{lastLoginDate},
+            </if>
+            <if test="roleId != null and roleId != ''">
+                ROLE_ID = #{roleId},
+            </if>
+        </set>
+        where USER_ID = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from lifedemo.sys_user where USER_ID = #{userId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lifedemo01.AccountBook.Trading.dao.CoTradingDao">
+
+    <resultMap id="BaseResultMap1" type="com.example.lifedemo01.AccountBook.Trading.entity.CoTrading">
+        <!--@Table co_trading-->
+        <result property="payNo" column="PAY_NO" jdbcType="VARCHAR"/>
+        <result property="custNo" column="CUST_NO" jdbcType="VARCHAR"/>
+        <result property="payTime" column="PAY_TIME" jdbcType="VARCHAR"/>
+        <result property="payeeName" column="PAYEE_NAME" jdbcType="VARCHAR"/>
+        <result property="commodityName" column="COMMODITY_NAME" jdbcType="VARCHAR"/>
+        <result property="amount" column="AMOUNT" jdbcType="VARCHAR"/>
+        <result property="io" column="IO" jdbcType="VARCHAR"/>
+        <result property="payStatus" column="PAY_STATUS" jdbcType="VARCHAR"/>
+        <result property="spendingKind" column="SPENDING_KIND" jdbcType="VARCHAR"/>
+        <result property="incomeKind" column="INCOME_KIND" jdbcType="VARCHAR"/>
+        <result property="isEffect" column="IS_EFFECT" jdbcType="VARCHAR"/>
+        <result property="payLable" column="PAY_LABLE" jdbcType="VARCHAR"/>
+        <result property="note" column="NOTE" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap1">
+        select
+          PAY_NO, CUST_NO, PAY_TIME, PAYEE_NAME, COMMODITY_NAME, AMOUNT, IO, PAY_STATUS, SPENDING_KIND, INCOME_KIND, IS_EFFECT, PAY_LABLE, NOTE
+        from lifedemo.co_trading
+        where PAY_NO = #{payNo}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap1">
+        select
+          PAY_NO, CUST_NO, PAY_TIME, PAYEE_NAME, COMMODITY_NAME, AMOUNT, IO, PAY_STATUS, SPENDING_KIND, INCOME_KIND, IS_EFFECT, PAY_LABLE, NOTE
+        from lifedemo.co_trading
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap1">
+        select
+          PAY_NO, CUST_NO, PAY_TIME, PAYEE_NAME, COMMODITY_NAME, AMOUNT, IO, PAY_STATUS, SPENDING_KIND, INCOME_KIND, IS_EFFECT, PAY_LABLE, NOTE
+        from lifedemo.co_trading
+        <where>
+            <if test="payNo != null and payNo != ''">
+                and PAY_NO = #{payNo}
+            </if>
+            <if test="custNo != null and custNo != ''">
+                and CUST_NO = #{custNo}
+            </if>
+            <if test="payTime != null and payTime != ''">
+                and PAY_TIME = #{payTime}
+            </if>
+            <if test="payeeName != null and payeeName != ''">
+                and PAYEE_NAME = #{payeeName}
+            </if>
+            <if test="commodityName != null and commodityName != ''">
+                and COMMODITY_NAME = #{commodityName}
+            </if>
+            <if test="amount != null">
+                and AMOUNT = #{amount}
+            </if>
+            <if test="io != null and io != ''">
+                and IO = #{io}
+            </if>
+            <if test="payStatus != null and payStatus != ''">
+                and PAY_STATUS = #{payStatus}
+            </if>
+            <if test="spendingKind != null and spendingKind != ''">
+                and SPENDING_KIND = #{spendingKind}
+            </if>
+            <if test="incomeKind != null and incomeKind != ''">
+                and INCOME_KIND = #{incomeKind}
+            </if>
+            <if test="isEffect != null and isEffect != ''">
+                and IS_EFFECT = #{isEffect}
+            </if>
+            <if test="payLable != null and payLable != ''">
+                and PAY_LABLE = #{payLable}
+            </if>
+            <if test="note != null and note != ''">
+                and NOTE = #{note}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="payNo" useGeneratedKeys="true">
+        insert into lifedemo.co_trading(PAY_NO, CUST_NO, PAY_TIME, PAYEE_NAME, COMMODITY_NAME, AMOUNT, IO, PAY_STATUS, SPENDING_KIND, INCOME_KIND, IS_EFFECT, PAY_LABLE, NOTE)
+        values (#{payNo},#{custNo},#{payTime},#{payeeName}, #{commodityName}, #{amount}, #{io}, #{payStatus}, #{spendingKind}, #{incomeKind}, #{isEffect}, #{payLable}, #{note})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update lifedemo.co_trading
+        <set>
+            <if test="payeeName != null and payeeName != ''">
+                PAYEE_NAME = #{payeeName},
+            </if>
+            <if test="commodityName != null and commodityName != ''">
+                COMMODITY_NAME = #{commodityName},
+            </if>
+            <if test="amount != null">
+                AMOUNT = #{amount},
+            </if>
+            <if test="io != null and io != ''">
+                IO = #{io},
+            </if>
+            <if test="payStatus != null and payStatus != ''">
+                PAY_STATUS = #{payStatus},
+            </if>
+            <if test="spendingKind != null and spendingKind != ''">
+                SPENDING_KIND = #{spendingKind},
+            </if>
+            <if test="incomeKind != null and incomeKind != ''">
+                INCOME_KIND = #{incomeKind},
+            </if>
+            <if test="isEffect != null and isEffect != ''">
+                IS_EFFECT = #{isEffect},
+            </if>
+            <if test="payLable != null and payLable != ''">
+                PAY_LABLE = #{payLable},
+            </if>
+            <if test="note != null and note != ''">
+                NOTE = #{note},
+            </if>
+        </set>
+        where PAY_NO = #{payNo}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from lifedemo.co_trading where PAY_NO = #{payNo}
+    </delete>
+
+</mapper>

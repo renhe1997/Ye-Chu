@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/layui/css/layui.css" th:href="@{/static/layui/css/layui.css}" rel="stylesheet">
+    <script src="/static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
+</head>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" style="background:  #3c763d ">顶部</div>
+    <div class="layui-side layui-bg-black">左侧</div>
+    <div class="layui-body"><span>内容</span>
+        <form id="formId">
+            <div class="select-list">
+                <ul>
+                    <li>
+                        <label>出差编号：</label>
+                        <input type="text" name="tid"/>
+                    </li>
+                    <li>
+                        <a class="btn btn-primary btn-rounded btn-sm" onclick="getData()"><i
+                                class="fa fa-search"></i>&nbsp;获取数据</a>
+                        <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                class="fa fa-refresh"></i>&nbsp;重置</a>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <div>
+            <table width="100%">
+                <thead>
+                <tr>
+                    <th th:text="${map.userName}"></th>
+                </tr>
+                <tr>
+                    <th>编号</th>
+                    <th>花费原因</th>
+                    <th>时间</th>
+                    <th>类别</th>
+                    <th>备注</th>
+                    <th>创建人</th>
+                    <th>创建时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ObjectMap : ${map.resultList}">
+                    <th>
+                        <input type="text" id="word" name="word" th:value="${obj!=null}?${obj.consumption_id}">
+                    </th>
+                    <th>
+                        <input type="text" id="answer" name="answer" th:value="${obj!=null}?${obj.consumption_reason}">
+                    </th>
+                    <td th:text="${ObjectMap.consumption_time}"></td>
+                    <td th:text="${ObjectMap.consumption_type}"></td>
+                    <td th:text="${ObjectMap.consumption_ps}"></td>
+                    <td th:text="${ObjectMap.crt_time}"></td>
+                    <td th:text="${ObjectMap.crt_name}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="layui-footer">底部</div>
+</div>
+</body>
+</html>
