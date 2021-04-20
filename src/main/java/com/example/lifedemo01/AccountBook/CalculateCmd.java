@@ -37,22 +37,7 @@ public class CalculateCmd {
     @Resource
     private BaseDictService baseDictService;
 
-//    BaseDict eatDict = this.baseDictService.queryById("CO_SPENDING_CONTENT", "0");
-//    BaseDict clothDict = this.baseDictService.queryById("CO_SPENDING_CONTENT", "1");
-//    BaseDict useDict = this.baseDictService.queryById("CO_SPENDING_CONTENT", "2");
-//    BaseDict playDict = this.baseDictService.queryById("CO_SPENDING_CONTENT", "3");
-//    BaseDict liveDict = this.baseDictService.queryById("CO_SPENDING_CONTENT", "4");
-//    BaseDict investDict = this.baseDictService.queryById("CO_SPENDING_CONTENT", "5");
-//    BaseDict gifDict = this.baseDictService.queryById("CO_SPENDING_CONTENT", "6");
-//    BaseDict trafficDict = this.baseDictService.queryById("CO_SPENDING_CONTENT", "7");
-//    List<String> eatList = Arrays.asList(eatDict.getDictValue().split(" "));
-//    List<String> clothList = Arrays.asList(clothDict.getDictValue().split(" "));
-//    List<String> useList = Arrays.asList(useDict.getDictValue().split(" "));
-//    List<String> playList = Arrays.asList(playDict.getDictValue().split(" "));
-//    List<String> liveList = Arrays.asList(liveDict.getDictValue().split(" "));
-//    List<String> investList = Arrays.asList(investDict.getDictValue().split(" "));
-//    List<String> gifList = Arrays.asList(gifDict.getDictValue().split(" "));
-//    List<String> trafficList = Arrays.asList(trafficDict.getDictValue().split(" "));
+
 
     /**
      * 导入支付宝EXCLE账单到数据库
@@ -172,6 +157,7 @@ public class CalculateCmd {
     }
 
     /**
+     * 分类判别
      * @param
      */
     public CoTrading changeType(CoTrading coTrading,List<BaseDict> spendKindList) {
